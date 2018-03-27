@@ -7,7 +7,6 @@
 <%@page import="java.sql.*"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
-<%@page import="java.util.ArrayList"%>
 <html>
     <head>
         <title> All vehicles </title>
