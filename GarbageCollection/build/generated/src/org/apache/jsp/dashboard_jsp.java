@@ -73,6 +73,9 @@ public final class dashboard_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                transition: all 0.5s ease;\n");
       out.write("                position: relative\n");
       out.write("            }\n");
+      out.write("            #align{\n");
+      out.write("                text-align: center;\n");
+      out.write("            }\n");
       out.write("            #map {\n");
       out.write("                margin-top: 57px;\n");
       out.write("                height: 91%;\n");
