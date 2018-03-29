@@ -1,17 +1,18 @@
 <%-- 
     Document   : history
-    Created on : Mar 26, 2018, 12:54:34 PM
+    Created on : Feb 26, 2018, 2:57:53 PM
     Author     : RAJ
 --%>
+
 <%@page import="java.util.Iterator"%>
 <%@page import="java.sql.*"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
+<%@page import="java.util.ArrayList"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
     <head>
-        <title> All vehicles </title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>History</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-growl/1.0.0/jquery.bootstrap-growl.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -19,14 +20,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
-        <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase-database.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase-firestore.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase-messaging.js"></script>
-        <script type="text/javascript" src="notifications.js"></script> 
         <style>
-            body{
+             body{
                 overflow: hidden;
             }	
             #wrapper {
@@ -37,11 +32,15 @@
                 transition: all 0.5s ease;
                 position: relative
             }
-            #map {
-                margin-top: 57px;
-                height: 91%;
+            #align{
+                text-align: center;
             }
-
+            #map{
+                height: 580px;
+                    width: 100%;
+                    margin-top: 57px;
+            }
+            
             #wrapper.toggled {
                 padding-left: 250px;
             }
@@ -147,9 +146,9 @@
                     margin-right: 0;
                 }
             }
-        </style>
+            </style>
     </head>
-    <body>
+    <body>        
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -172,8 +171,8 @@
         </nav>
         <script>
             $("#menu-toggle").click(function (e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
             });
         </script>
         <div id="wrapper" class="toggled">
@@ -215,27 +214,57 @@
                         </li>
                     </ul>
                 </div>
-                <!--//////////////////-->
-<div id="map">
-    <h1 style="margin-top:100px">Enter Route details</h1>
+         <div id="map"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_PxyALiG_az7gA06dqHyo0FiBeZMfAKI&callback=initialize">
+    </script>
+    <script>
+var map;
+function initialize() {
+  var mapOptions = {
+    zoom: 8,
+    center: new google.maps.LatLng(22.718639, 75.854149)
+  };
+  map = new google.maps.Map(document.getElementById('map'),
+      mapOptions);
+}
 
-                <form action="historymap.jsp" method="get">
-                    
-                    <div class="form-group">
-                        <label>Vehicle Number:</label>
-                    <input type="text" name="vehicle_number" class="form-control"
-                    <div class="form-group">
-                    <label>Date:</label>
-                    <input type="date" name="date" class="form-control"/><br>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-default"> Show Route </button>
-                    </div>
-                </form>
-</div>    
-                <!--///////////////////-->    
-            </div>
+//google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+        <% 
+            ArrayList latitude= new ArrayList();
+            ArrayList longitude= new ArrayList();
+            String vehicle_number = request.getParameter("vehicle_number");
+            out.println(vehicle_number);
+            String date = request.getParameter("date");
+           Statement ps;
+           ResultSet rs;
+           
+            String getDetails = "select * from location where vehicle_id="+vehicle_number;
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://sql12.freemysqlhosting.net:3306/sql12228900","sql12228900","xLQLpxLlLZ");
+            
+            ps = con.createStatement();
+            rs = ps.executeQuery(getDetails);
+         
+            while (rs.next()) {
+                latitude.add(rs.getString("latitude"));
+                longitude.add(rs.getString("longitude"));
+            }      
+            
+           Iterator itr1 = latitude.iterator();
+           Iterator itr2 = longitude.iterator();
+           
+        // while loop
+        while (itr1.hasNext() && itr2.hasNext()) {
+        out.println("latitude= " + itr1.next());
+        out.println("longitude= " + itr2.next());
+        out.println("<br>");
+        }
+        
+        %>
+         </div>
         </div>
         <!-- /#wrapper -->
     </body>
 </html>
+       

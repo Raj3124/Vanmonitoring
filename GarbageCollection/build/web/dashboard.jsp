@@ -21,7 +21,6 @@
         <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase-database.js"></script>
         <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase-firestore.js"></script>
         <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase-messaging.js"></script>
-
         <style>
             body{
                 overflow: hidden;
@@ -198,22 +197,28 @@
                                                     <a href="#"><span class="glyphicon glyphicon-search"></span> Search</a>
                                                 </li>                -->
                         <li>
-                            <span class="glyphicon glyphicon-search"></span><font color="#337AB7"> STATISTICS</font>
+                            <span class="glyphicon glyphicon-search"></span><font color="#337AB7"> CITIZEN SECTION</font>
                         </li>
                         <li>
-                            <a href="#"><span class="glyphicon glyphicon-tasks"></span> Reports</a>
+                            <a href="notifications.jsp"><span class="glyphicon glyphicon-alert"></span> Citizen's Complaints </a>
                         </li>
                         <li>
-                            <a href="#"><span class="glyphicon glyphicon-stats"></span> Statistic</a>
+                            <a href="#"><span class="glyphicon glyphicon-info-sign"></span> Citizen's Suggestions </a>
                         </li>
                         <li>
-                            <span class="glyphicon glyphicon-search"></span><font color="#337AB7"> ADMINISTRATION</font>
+                            <span class="glyphicon glyphicon-search"></span><font color="#337AB7"> DRIVER SECTION</font>
                         </li>
                         <li>
-                            <a href="drivers.jsp"><span class="glyphicon glyphicon-user"></span> Drivers</a>
+                            <a href="drivers.jsp"><span class="glyphicon glyphicon-user"></span> Register Driver </a>
                         </li>
                         <li>
-                            <a href="#"><span class="glyphicon glyphicon-envelope"></span> Messages</a>
+                            <a href="#"><span class="glyphicon glyphicon-alert"></span> Driver's SOS </a>
+                        </li>
+                         <li>
+                            <span class="glyphicon glyphicon-search"></span><font color="#337AB7"> ADMIN SECTION</font>
+                        </li>
+                        <li>
+                            <a href="#"><span class="glyphicon glyphicon-road"></span> View old routes </a>
                         </li>
                     </ul>
                 </div>

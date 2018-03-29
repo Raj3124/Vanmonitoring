@@ -4,7 +4,9 @@
     Author     : RAJ
 --%>
 
+<%@page import="java.sql.*"%>
 <html>
+
     <head>
         <title> Notifications </title>
         <meta charset="utf-8">
@@ -22,12 +24,13 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="notifications.js"></script>
         <style>
-
-            #headtitle{
+            #headtitle {
                 margin-top: 100px;
                 text-align: center;
             }
+
             #wrapper {
                 padding-left: 0;
                 -webkit-transition: all 0.5s ease;
@@ -36,6 +39,7 @@
                 transition: all 0.5s ease;
                 position: relative;
             }
+
             #map {
                 margin-top: 50px;
                 margin-bottom: 0;
@@ -109,22 +113,22 @@
                 text-decoration: none;
             }
 
-            .sidebar-nav > .sidebar-brand {
+            .sidebar-nav>.sidebar-brand {
                 height: 65px;
                 font-size: 18px;
                 line-height: 60px;
             }
 
-            .sidebar-nav > .sidebar-brand a {
+            .sidebar-nav>.sidebar-brand a {
                 color: #999999;
             }
 
-            .sidebar-nav > .sidebar-brand a:hover {
+            .sidebar-nav>.sidebar-brand a:hover {
                 background: none;
                 color: #fff;
             }
 
-            @media (max-width: 768px) {
+            @media (min-width: 768px) {
                 #wrapper {
                     padding-left: 250px;
                 }
@@ -152,25 +156,37 @@
             }
         </style>
     </head>
+
     <body>
 
 
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"  aria-controls="navbar">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-controls="navbar">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#menu-toggle" id="menu-toggle"><span class="glyphicon glyphicon-list"></span></a>
+                    <a class="navbar-brand" href="#menu-toggle" id="menu-toggle">
+                        <span class="glyphicon glyphicon-list"></span>
+                    </a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                          <li><a href="notifications.jsp"><span class="glyphicon glyphicon-bell"></span> Notifications </a></li>
-                        <li><a href="#"><span class="glyphicon glyphicon-off"></span> Log Out</a></li>
+                        <li>
+                            <a href="#">
+                                <span class="glyphicon glyphicon-home"></span> Home</a>
+                        </li>
+                        <li>
+                            <a href="notifications.jsp">
+                                <span class="glyphicon glyphicon-bell"></span> Notifications </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="glyphicon glyphicon-off"></span> Log Out</a>
+                        </li>
                     </ul>
 
                 </div>
@@ -181,8 +197,6 @@
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");
             });
-
-
         </script>
         <div id="wrapper" class="toggled">
             <div class="container-fluid">
@@ -198,37 +212,113 @@
                             </a>
                         </li>
                         <li>
-                            <a href="dashboard.jsp"><span class="glyphicon glyphicon-home"></span> Home</a>
-                        </li>             
-                        <li>
-                            <span class="glyphicon glyphicon-search"></span><font color="#337AB7"> STATISTICS</font>
+                            <a href="dashboard.jsp">
+                                <span class="glyphicon glyphicon-home"></span> Home</a>
                         </li>
                         <li>
-                            <a href="#"><span class="glyphicon glyphicon-tasks"></span> Reports</a>
+                            <span class="glyphicon glyphicon-search"></span>
+                            <font color="#337AB7"> CITIZEN SECTION</font>
                         </li>
                         <li>
-                            <a href="#"><span class="glyphicon glyphicon-stats"></span> Statistic</a>
+                            <a href="#">
+                                <span class="glyphicon glyphicon-tasks"></span> Citizen's Complaints </a>
                         </li>
                         <li>
-                            <span class="glyphicon glyphicon-search"></span><font color="#337AB7"> ADMINISTRATION</font>
+                            <a href="#">
+                                <span class="glyphicon glyphicon-stats"></span> Citizen's Suggestions </a>
                         </li>
                         <li>
-                            <a href="drivers.jsp"><span class="glyphicon glyphicon-user"></span> Drivers</a>
+                            <span class="glyphicon glyphicon-search"></span>
+                            <font color="#337AB7"> DRIVER SECTION</font>
                         </li>
                         <li>
-                            <a href="#"><span class="glyphicon glyphicon-envelope"></span> Messages</a>
+                            <a href="drivers.jsp">
+                                <span class="glyphicon glyphicon-user"></span> Add Driver </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="glyphicon glyphicon-envelope"></span> Driver's SOS </a>
                         </li>
                     </ul>
                 </div>
 
                 <!--        //////////////////// write code in between these //////////////////-->
+                <%
+                    String citizencomplaint = "select * from instantcomplaint";
+                    Class.forName("com.mysql.jdbc.Driver");
+                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/vanmonitoring", "root", "Rajmj3113");
+                    ResultSet rs1, rs2;
+                    Statement ps1, ps2;
+                    ps1 = con.createStatement();
+                    rs1 = ps1.executeQuery(citizencomplaint);
+                %>
+                <div id="map">
+                    <h1 style="margin-top:67px;text-align: center;font-style: italic;font-family: cursive"> Citizen Complaints </h1>
+                    <hr>
+                    <div class="table table-striped">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <!--<th>Lastname</th>-->
+                                    <th>Address</th>
+                                    <th>Phone number</th>
+                                    <th>Complaint</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                
-                
-                <!--///////////////////-->    
+                                <%
+                                    while (rs1.next()) {
+                                        String complaintId = rs1.getString(1);
+                                        String citizenId = rs1.getString(2);
+                                        String citizen = "select name,address,phone from citizen where id=" + citizenId;
+                                        ps2 = con.createStatement();
+                                        rs2 = ps2.executeQuery(citizen);
+                                        rs2.next();
+                                %>
+                                <tr>
+                                    <td>
+                                        <% out.println(rs2.getString(1));%>
+                                    </td>
+                                    <td>
+                                        <% out.println(rs2.getString(2));%>
+                                    </td>
+                                    <td>
+                                        <% out.println(rs2.getString(3));%>
+                                    </td>
+                                    <td>
+                                        <% out.println(rs1.getString(3));%>
+                                    </td>
+                                    <td>
+                                        <%
+                                            int i = Integer.parseInt(rs1.getString(4));
+                                            if (i == 1) {
+                                                out.println("<label>Resolved<label>&nbsp<span class='glyphicon glyphicon-ok' style='color:green' </span> <td>");
+                                                %>
+                                               <td> <button type="submit" class="btn btn-primary" onClick="document.location.href = 'UpdateToUnresolve.jsp?id=<%=complaintId%>';">Mark Resolved</button><td>
+                                        <%
+                                            } else if (i == 0) {
+                                                out.println("<label>Unresolved<label>&nbsp<span class='glyphicon glyphicon-warning-sign' style='color:red'</span><td>");
+                                        %>
+                                        <td><button type="submit" class="btn btn-primary" onClick="document.location.href = 'UpdateResolve.jsp?id=<%=complaintId%>';">Mark Resolved</button></td>
+                                        <%
+                                            }
+                                        %>
+                                    </td>
+                                <tr>
+                                    <%  }
+                                    %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!--///////////////////-->
             </div>
         </div>
-        
+
         <!-- /#wrapper -->
     </body>
+
 </html>

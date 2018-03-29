@@ -8,6 +8,10 @@
         <servlet-name>drivermysql</servlet-name>
         <servlet-class>drivermysql</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateResolve</servlet-name>
+        <servlet-class>.UpdateResolve</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>InsertData</servlet-name>
         <url-pattern>/InsertData</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>drivermysql</servlet-name>
         <url-pattern>/drivermysql</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateResolve</servlet-name>
+        <url-pattern>/UpdateResolve</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
