@@ -24,7 +24,7 @@
         <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase-database.js"></script>
         <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase-firestore.js"></script>
         <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase-messaging.js"></script>
-
+        <script type="text/javascript" src="notifications.js"></script> 
         <style>
             body{
                 overflow: hidden;
@@ -219,7 +219,7 @@
 <div id="map">
     <h1 style="margin-top:100px">Enter Route details</h1>
 
-                <form action="history123.jsp" method="get">
+                <form action="historymap.jsp" method="get">
                     
                     <div class="form-group">
                         <label>Vehicle Number:</label>
@@ -232,7 +232,6 @@
                         <button type="submit" class="btn btn-default"> Show Route </button>
                     </div>
                 </form>
-                <input type="button" onClick="runner1()" value="alerts"/>
 </div>    
                 <!--///////////////////-->    
             </div>
